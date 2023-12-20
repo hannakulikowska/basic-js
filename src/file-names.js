@@ -15,30 +15,59 @@
  * the output should be ["file", "file(1)", "image", "file(1)(1)", "file(2)"]
  *
  */
+
+// The first solution is faster
+
 function renameFiles(names) {
-  // create a new array
-  const renamed = [];
+  // create a new Set (there are only unique names)
+  const renamed = new Set();
   // create an object to count file names
   const countFiles = {};
 
-  // check each element of the names array
-  for (const name of names) {
-    let newName = name;
+   // check each element of the names array
+  for (let i = 0; i < names.length; i++) {
+    let newName = names[i];
     // count variable is equal zero, if newName doesn't exist in countFiles. If newName file exists in countFiles, then count is equal to the number of existing files 
     let count = countFiles[newName] || 0;
 
-    // while the renamed array includes newName file, count to the number of files and create new name
-    while (renamed.includes(newName)) {
+    // while renamed set has already had newName, count and update newName
+    while (renamed.has(newName)) {
       count++;
-      newName = `${name}(${count})`;
+      newName = `${names[i]}(${count})`;
     }
 
-    countFiles[name] = count;
-    renamed.push(newName);
+    countFiles[names[i]] = count;
+    renamed.add(newName);
   }
-  // [ 'file', 'file(1)', 'image', 'file(1)(1)', 'file(2)' ]
-  return renamed;  
+
+  return Array.from(renamed);
 }
+
+
+// // The second solution
+// function renameFiles(names) {
+  
+//   const renamed = [];
+  
+//   const countFiles = {};
+
+ 
+//   for (const name of names) {
+//     let newName = name;
+    
+//     let count = countFiles[newName] || 0;
+
+//     while (renamed.includes(newName)) {
+//       count++;
+//       newName = `${name}(${count})`;
+//     }
+
+//     countFiles[name] = count;
+//     renamed.push(newName);
+//   }
+  
+//   return renamed;  
+// }
 
 
 module.exports = {
