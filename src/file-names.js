@@ -32,8 +32,7 @@ function renameFiles(names) {
 
     // while renamed set has already had newName, count and update newName
     while (renamed.has(newName)) {
-      count++;
-      newName = `${names[i]}(${count})`;
+      newName = `${names[i]}(${++count})`;
     }
 
     countFiles[names[i]] = count;
